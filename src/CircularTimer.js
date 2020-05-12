@@ -18,6 +18,7 @@ export default class CircularTimer extends React.Component {
     style: ViewPropTypesStyle,
     textStyle: Text.propTypes.style,
     secondStyle: Text.propTypes.style,
+    onTimeChange: PropTypes.func,
     onTimeElapsed: PropTypes.func
   };
 
@@ -32,7 +33,8 @@ export default class CircularTimer extends React.Component {
     style: null,
     textStyle: null,
     secondStyle: null,
-    onTimeElapsed: () => {}
+    onTimeChange: () => { },
+    onTimeElapsed: () => { }
   };
 
   constructor(props) {
@@ -55,8 +57,9 @@ export default class CircularTimer extends React.Component {
   _start = () => {
     this._timer = setInterval(() => {
       const { elapsedTime, rotate } = this.state,
-        { seconds, onTimeElapsed } = this.props;
-      if (elapsedTime > 0)
+        { seconds, onTimeChange, onTimeElapsed } = this.props;
+      if (elapsedTime > 0) {
+        onTimeChange(elapsedTime);
         this.setState(
           {
             elapsedTime: elapsedTime - 1,
@@ -66,7 +69,8 @@ export default class CircularTimer extends React.Component {
             if (elapsedTime - 1 === 0) onTimeElapsed();
           }
         );
-      else this._clearTimer();
+      }
+      else { this._clearTimer() };
     }, 1000);
   };
 

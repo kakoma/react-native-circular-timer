@@ -46,6 +46,11 @@ declare module 'react-native-circular-timer' {
     textStyle?: TextStyle;
 
     /**
+     * Callback for when the time is updated every second.
+     */
+    onTimeChange?(): void;
+
+    /**
      * Callback for the timer end.
      */
     onTimeElapsed?(): void;
